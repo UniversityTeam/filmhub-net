@@ -6,12 +6,12 @@ namespace Filmhub
 {
     public class Comment
     {
-        int id { get; set; }
-        int filmid { get; set; }
-        int userid { get; set; }
+        public int id { get; set; }
+        public int filmid { get; set; }
+        public int userid { get; set; }
 
-        string textdata { get; set; }
-        bool approved { get; set; }
+        public string textdata { get; set; }
+        public bool approved { get; set; }
 
         public Comment(
             int id, 

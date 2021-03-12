@@ -6,16 +6,16 @@ namespace Filmhub
 {
     public class Film
     {
-        int id;
-        string title;
-        int year;
-        float rating;
-        int rating_count;
-        int views;
-        string poster;
-        Genre genre;
-        string url;
-        bool free;
+        public int id;
+        public string title;
+        public int year;
+        public float rating;
+        public int rating_count;
+        public int views;
+        public string poster;
+        public Genre genre;
+        public string url;
+        public bool free;
 
         public Film(
             int id,
