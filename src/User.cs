@@ -36,8 +36,11 @@ namespace Filmhub
         public void AddModerator() { }
         public void AddAdministrator(User user) 
         {
-            user.administrator = true;
-            Console.WriteLine($"User with id = {user.id} now is Administrator!");
+            if (this.administrator)
+            {
+                user.administrator = true;
+                Console.WriteLine($"User with id = {user.id} now is Administrator!");
+            }
         }
         public void RemoveComment() { }
         public void RemoveUser() { }
