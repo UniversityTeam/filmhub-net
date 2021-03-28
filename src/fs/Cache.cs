@@ -17,11 +17,11 @@ namespace Filmhub.FS
         {
             if(!data.ContainsKey(path))
             {
-                Console.WriteLine("File readed from disk");
+                Console.WriteLine($"File {path} readed from disk");
                 Add(new File(path));
             }
 
-            Console.WriteLine("File readed from cache");
+            Console.WriteLine($"File {path} readed from cache");
             return data[path];
         }
 

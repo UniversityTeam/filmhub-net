@@ -11,7 +11,7 @@ namespace Filmhub
 {
     namespace Http
     {
-        public delegate void Callback(NameValueCollection request, Stream response);
+        public delegate void Callback(NameValueCollection request, HttpListenerResponse response);
 
         class Server
         {
@@ -31,9 +31,12 @@ namespace Filmhub
 
                 // Set up http server
                 listener.Prefixes.Add(host);
+
+                Console.WriteLine($"Server created {host}");
             }
             ~Server()
             {
+                Console.WriteLine("Server stopped");
                 listener.Stop();
             }
 
@@ -52,7 +55,12 @@ namespace Filmhub
             {
                 HttpListenerRequest request = context.Request;
 
-                string url = request.Url.MakeRelativeUri(request.Url).ToString();
+                // TODO: store ip & user agent
+                //string userAgent = request.UserAgent;
+                string ip = request.UserHostAddress;
+                string url = request.RawUrl;
+                string method = request.HttpMethod;
+                NameValueCollection query = request.QueryString;
 
                 // Simple malicious filtration
                 if (url.Contains(".."))
@@ -60,41 +68,70 @@ namespace Filmhub
                     return;
                 }
 
-                switch (request.HttpMethod)
+                string result = "";
+                switch (method)
                 {
                     case "GET":
-                        HandleStatic(url, context.Response.OutputStream);
-                        return;
+                        HandleStatic(ref url, context.Response, ref result);
+                        break;
                     case "POST":
-                        HandleEndpoints(url, request.QueryString, context.Response.OutputStream);
-                        return;
+                        HandleEndpoints(ref url, request.QueryString, context.Response, ref result);
+                        break;
+                }
+
+                if (query.Count == 0)
+                {
+                    Console.WriteLine($"[{ip}]\t{method}\t{url}\t{result}");
+                }
+                else
+                {
+                    string queryStr = query.ToString();
+                    //queryStr = queryStr.Substring(13, queryStr.Length - 13);
+                    Console.WriteLine($"[{ip}]\t{method}\t{url}\t{result}\t{queryStr}");
                 }
             }
 
-            private void HandleStatic(string path, Stream response)
+            private void HandleStatic(ref string path, HttpListenerResponse response, ref string result)
             {
                 try
                 {
-                    if(path.Length == 0)
+                    // Set up default root file
+                    if (path == "/")
                     {
                         path = "/index.html";
                     }
 
-                    byte[] buffer = staticCache.Get($"{root}{path}");
-                    response.Write(buffer, 0, buffer.Length);
+                    string filePath = $"{root}{path}";
+
+                    // Responce 404 if file doesn't exist
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        byte[] buffer404 = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
+                        response.OutputStream.Write(buffer404, 0, buffer404.Length);
+                        response.StatusCode = 404;
+                        response.Close();
+                        result = "404 Not Found";
+                        return;
+                    }
+                    
+                    byte[] buffer = staticCache.Get(filePath);
+                    response.OutputStream.Write(buffer, 0, buffer.Length);
+                    response.StatusCode = 200;
                     response.Close();
+                    result = "200 OK";
                 }
-                // Responce 404
+                // Responce 500
                 catch (Exception exception)
                 {
-                    byte[] buffer = staticCache.Get(responses[Code.NOT_FOUND]);
-                    response.Write(buffer, 0, buffer.Length);
+                    byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
+                    response.OutputStream.Write(buffer, 0, buffer.Length);
+                    response.StatusCode = 500;
                     response.Close();
-                    Console.WriteLine($"Responce 404: {exception}");
+                    result = $"500 Internal error\n{exception}";
                 }
             }
 
-            private void HandleEndpoints(string path, NameValueCollection request, Stream response)
+            private void HandleEndpoints(ref string path, NameValueCollection request, HttpListenerResponse response, ref string result)
             {
                 Callback callback;
 
@@ -102,21 +139,34 @@ namespace Filmhub
                 {
                     callback = endpoints[path];
                     callback(request, response);
+                    result = "200 OK";
                 }
                 // Responce 500
                 catch (Exception exception)
                 {
-                    byte[] buffer = staticCache.Get(responses[Code.NOT_FOUND]);
-                    response.Write(buffer, 0, buffer.Length);
+                    byte[] buffer = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
+                    response.OutputStream.Write(buffer, 0, buffer.Length);
+                    response.StatusCode = 500;
                     response.Close();
-                    Console.WriteLine($"Responce 500: {exception}");
+                    result = $"500 Internal error\n{exception}";
                 }
             }
 
             // Start listening for new connections
             public void Listen()
             {
-                listener.Start();
+                try
+                {
+                    listener.Start();
+                }
+                catch(Exception exception)
+                {
+                    Console.WriteLine(exception);
+                    return;
+                }
+
+                Console.WriteLine("Server started");
+
                 while (listener.IsListening)
                 {
                     // Метод GetContext блокирует текущий поток, ожидая подключения

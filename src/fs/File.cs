@@ -29,7 +29,7 @@ namespace Filmhub.FS
             byte[] data = new byte[stream.Length];
 
             // Read all stream
-            stream.Read(data, 0, data.Length);
+            stream.Read(data, 0, (int)stream.Length);
 
             return data;
         }
