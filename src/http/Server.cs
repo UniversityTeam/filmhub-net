@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Collections.Specialized;
 
 using System.Net;
 using System.IO;
+
+using Filmhub.FS;
 
 namespace Filmhub
 {
     namespace Http
     {
+        public delegate void Callback(NameValueCollection request, Stream response);
+
         class Server
         {
-            private Dictionary<string, Endpoint> endpoints;
+            private Cache staticCache;
+            private Dictionary<string, Callback> endpoints;
+            private Dictionary<Code, string> responses;
             private HttpListener listener;
             private string root;
 
@@ -19,19 +25,25 @@ namespace Filmhub
             {
                 this.root = root;
                 listener = new HttpListener();
+                responses = new Dictionary<Code, string>();
+                //endpoints = Dictionary<string, Callback>();
+                staticCache = new Cache();
 
                 // Set up http server
                 listener.Prefixes.Add(host);
-                listener.Start();
             }
             ~Server()
             {
                 listener.Stop();
             }
 
-            public void AddEndpoint(Method method, string path, AsyncCallback callback)
+            public void AddEndpoint(string path, Callback callback)
             {
-                endpoints.Add(path, new Endpoint(method, callback));
+                endpoints.Add(path, callback);
+            }
+            public void SetStaticResponce(Code code, string path)
+            {
+                responses.Add(code, path);
             }
 
             // Process the new connection to the server
@@ -40,62 +52,77 @@ namespace Filmhub
             {
                 HttpListenerRequest request = context.Request;
 
-                Console.WriteLine(request.Url.AbsoluteUri);
-                Console.WriteLine(request.HttpMethod);
+                string url = request.Url.MakeRelativeUri(request.Url).ToString();
 
                 // Simple malicious filtration
-                if (request.Url.AbsoluteUri.Contains(".."))
+                if (url.Contains(".."))
                 {
-                    return;
-                }
-
-                Endpoint endpoint;
-
-                try
-                {
-                    endpoint = endpoints[request.Url.AbsoluteUri];
-                }
-                catch(Exception exception)
-                {
-
-                    Console.WriteLine($"May some error occured: {exception}");
                     return;
                 }
 
                 switch (request.HttpMethod)
                 {
                     case "GET":
-                        break;
+                        HandleStatic(url, context.Response.OutputStream);
+                        return;
                     case "POST":
-                        break;
+                        HandleEndpoints(url, request.QueryString, context.Response.OutputStream);
+                        return;
                 }
+            }
 
-                // получаем объект ответа
-                HttpListenerResponse response = context.Response;
-                // создаем ответ в виде кода html
-                string responseStr = "<html><head><meta charset='utf8'></head><body>404 Not Found</body></html>";
-                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseStr);
-                // получаем поток ответа и пишем в него ответ
-                response.ContentLength64 = buffer.Length;
-                Stream output = response.OutputStream;
-                output.Write(buffer, 0, buffer.Length);
-                // закрываем поток
-                output.Close();
-                // останавливаем прослушивание подключений
+            private void HandleStatic(string path, Stream response)
+            {
+                try
+                {
+                    if(path.Length == 0)
+                    {
+                        path = "/index.html";
+                    }
+
+                    byte[] buffer = staticCache.Get($"{root}{path}");
+                    response.Write(buffer, 0, buffer.Length);
+                    response.Close();
+                }
+                // Responce 404
+                catch (Exception exception)
+                {
+                    byte[] buffer = staticCache.Get(responses[Code.NOT_FOUND]);
+                    response.Write(buffer, 0, buffer.Length);
+                    response.Close();
+                    Console.WriteLine($"Responce 404: {exception}");
+                }
+            }
+
+            private void HandleEndpoints(string path, NameValueCollection request, Stream response)
+            {
+                Callback callback;
+
+                try
+                {
+                    callback = endpoints[path];
+                    callback(request, response);
+                }
+                // Responce 500
+                catch (Exception exception)
+                {
+                    byte[] buffer = staticCache.Get(responses[Code.NOT_FOUND]);
+                    response.Write(buffer, 0, buffer.Length);
+                    response.Close();
+                    Console.WriteLine($"Responce 500: {exception}");
+                }
             }
 
             // Start listening for new connections
             public void Listen()
             {
+                listener.Start();
                 while (listener.IsListening)
                 {
                     // Метод GetContext блокирует текущий поток, ожидая подключения
                     Handle(listener.GetContext());
                 }
             }
-
-
-
         }
     }
 }

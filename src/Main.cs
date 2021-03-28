@@ -9,6 +9,9 @@ namespace Filmhub
         {
             Server server = new Server("http://localhost:8000/", "static/");
 
+            server.SetStaticResponce(Code.NOT_FOUND, "404.html");
+            server.SetStaticResponce(Code.INTERNAL_ERROR, "500.html");
+
             server.Listen();
 
             Console.WriteLine("Lab2 started...");
