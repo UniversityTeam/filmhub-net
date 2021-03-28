@@ -1,4 +1,5 @@
 using System;
+using Filmhub.Http;
 
 namespace Filmhub
 {
@@ -6,6 +7,10 @@ namespace Filmhub
     {
         static void Main(string[] args)
         {
+            Server server = new Server("http://localhost:8000/", "static/");
+
+            server.Listen();
+
             Console.WriteLine("Lab2 started...");
 
             User defaultUser = new User();
