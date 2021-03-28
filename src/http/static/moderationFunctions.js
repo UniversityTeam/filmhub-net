@@ -65,7 +65,7 @@ function showFilms() {
 async function addFilm() {
   const genres = [];
 
-  await makeRequest('', 'POST', '/genres').then(res => {
+  await makeRequest('', 'POST', '/getgenres').then(res => {
     res = JSON.parse(res);
     res.map(element => {
       genres.push(element['lable']);

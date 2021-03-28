@@ -96,13 +96,13 @@ namespace Filmhub
 
                 if (query.Count == 0)
                 {
-                    Console.WriteLine($"[{ip}]\t{method}\t{url}\t{result}");
+                    Console.WriteLine($"[{ip}]\t\t{method}\t\t{url}\t\t{result}");
                 }
                 else
                 {
                     string queryStr = query.ToString();
                     //queryStr = queryStr.Substring(13, queryStr.Length - 13);
-                    Console.WriteLine($"[{ip}]\t{method}\t{url}\t{result}\t{queryStr}");
+                    Console.WriteLine($"[{ip}]\t\t{method}\t\t{url}\t\t{result}\t\t{queryStr}");
                 }
             }
 
