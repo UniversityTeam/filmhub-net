@@ -111,10 +111,10 @@ namespace Filmhub
                 // Set up default root file
                 if (path == "/")
                 {
-                    path = "index.html";
+                    path = "/index.html";
                 }
 
-                string filePath = $"{root}{path}";
+                string filePath = root + path;
 
                 // Responce 404 if file doesn't exist
                 if (!System.IO.File.Exists(filePath))
@@ -147,7 +147,7 @@ namespace Filmhub
                 else
                 // Responce 500
                 {
-                    byte[] buffer = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
+                    byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
                     response.OutputStream.Write(buffer, 0, buffer.Length);
                     response.StatusCode = 500;
                     response.Close();

@@ -7,7 +7,7 @@ namespace Filmhub
     {
         static void Main(string[] args)
         {
-            Server server = new Server("http://localhost:8000/", "http/static/");
+            Server server = new Server("http://localhost:8000/", "http/static");
 
             server.SetStaticResponce(Code.NOT_FOUND, "404.html");
             server.SetStaticResponce(Code.INTERNAL_ERROR, "500.html");
