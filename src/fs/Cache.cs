@@ -15,13 +15,16 @@ namespace Filmhub.FS
 
         public byte[] Get(string path)
         {
-            if(!data.ContainsKey(path))
+            if (!data.ContainsKey(path))
             {
                 Console.WriteLine($"File {path} readed from disk");
                 Add(new File(path));
             }
+            else
+            {
+                Console.WriteLine($"File {path} readed from cache");
+            }
 
-            Console.WriteLine($"File {path} readed from cache");
             return data[path];
         }
 

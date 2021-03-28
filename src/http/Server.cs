@@ -16,7 +16,7 @@ namespace Filmhub
         class Server
         {
             private Cache staticCache;
-            private Dictionary<string, Callback> endpoints;
+            private Dictionary<string, Callback> routes;
             private Dictionary<Code, string> responses;
             private HttpListener listener;
             private string root;
@@ -26,7 +26,7 @@ namespace Filmhub
                 this.root = root;
                 listener = new HttpListener();
                 responses = new Dictionary<Code, string>();
-                //endpoints = Dictionary<string, Callback>();
+                routes = new Dictionary<string, Callback>();
                 staticCache = new Cache();
 
                 // Set up http server
@@ -40,9 +40,9 @@ namespace Filmhub
                 listener.Stop();
             }
 
-            public void AddEndpoint(string path, Callback callback)
+            public void AddRoute(string path, Callback callback)
             {
-                endpoints.Add(path, callback);
+                routes.Add(path, callback);
             }
             public void SetStaticResponce(Code code, string path)
             {
@@ -54,6 +54,7 @@ namespace Filmhub
             private void Handle(HttpListenerContext context)
             {
                 HttpListenerRequest request = context.Request;
+                HttpListenerResponse response = context.Response;
 
                 // TODO: store ip & user agent
                 //string userAgent = request.UserAgent;
@@ -69,14 +70,28 @@ namespace Filmhub
                 }
 
                 string result = "";
-                switch (method)
+
+                try
                 {
-                    case "GET":
-                        HandleStatic(ref url, context.Response, ref result);
-                        break;
-                    case "POST":
-                        HandleEndpoints(ref url, request.QueryString, context.Response, ref result);
-                        break;
+                    switch (method)
+                    {
+                        case "GET":
+                            HandleStatic(ref url, response, ref result);
+                            break;
+                        case "POST":
+                            HandleRoutes(ref url, request.QueryString, response, ref result);
+                            break;
+                    }
+
+                }
+                // Responce 500
+                catch (Exception exception)
+                {
+                    byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
+                    response.OutputStream.Write(buffer, 0, buffer.Length);
+                    response.StatusCode = 500;
+                    response.Close();
+                    result = $"500 Internal error\n{exception}";
                 }
 
                 if (query.Count == 0)
@@ -93,64 +108,53 @@ namespace Filmhub
 
             private void HandleStatic(ref string path, HttpListenerResponse response, ref string result)
             {
-                try
+                // Set up default root file
+                if (path == "/")
                 {
-                    // Set up default root file
-                    if (path == "/")
-                    {
-                        path = "/index.html";
-                    }
-
-                    string filePath = $"{root}{path}";
-
-                    // Responce 404 if file doesn't exist
-                    if (!System.IO.File.Exists(filePath))
-                    {
-                        byte[] buffer404 = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
-                        response.OutputStream.Write(buffer404, 0, buffer404.Length);
-                        response.StatusCode = 404;
-                        response.Close();
-                        result = "404 Not Found";
-                        return;
-                    }
-                    
-                    byte[] buffer = staticCache.Get(filePath);
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                    response.StatusCode = 200;
-                    response.Close();
-                    result = "200 OK";
+                    path = "index.html";
                 }
-                // Responce 500
-                catch (Exception exception)
+
+                string filePath = $"{root}{path}";
+
+                // Responce 404 if file doesn't exist
+                if (!System.IO.File.Exists(filePath))
                 {
-                    byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                    response.StatusCode = 500;
+                    byte[] buffer404 = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
+                    response.OutputStream.Write(buffer404, 0, buffer404.Length);
+                    response.StatusCode = 404;
                     response.Close();
-                    result = $"500 Internal error\n{exception}";
+                    result = "404 Not Found";
+                    return;
                 }
+
+                byte[] buffer = staticCache.Get(filePath);
+                response.OutputStream.Write(buffer, 0, buffer.Length);
+                response.StatusCode = 200;
+                response.Close();
+                result = "200 OK";
             }
 
-            private void HandleEndpoints(ref string path, NameValueCollection request, HttpListenerResponse response, ref string result)
+            private void HandleRoutes(ref string path, NameValueCollection request, HttpListenerResponse response, ref string result)
             {
                 Callback callback;
 
-                try
+                if (routes.ContainsKey(path))
                 {
-                    callback = endpoints[path];
+                    callback = routes[path];
                     callback(request, response);
                     result = "200 OK";
                 }
+                else
                 // Responce 500
-                catch (Exception exception)
                 {
                     byte[] buffer = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
                     response.OutputStream.Write(buffer, 0, buffer.Length);
                     response.StatusCode = 500;
                     response.Close();
-                    result = $"500 Internal error\n{exception}";
+                    result = "500 Internal error";
                 }
             }
+        
 
             // Start listening for new connections
             public void Listen()
