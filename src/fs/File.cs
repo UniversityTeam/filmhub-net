@@ -15,6 +15,10 @@ namespace Filmhub.FS
         {
             Open(path);
         }
+        ~File()
+        {
+            Close();
+        }
 
         public override void Open(string path)
         {

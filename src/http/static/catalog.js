@@ -162,7 +162,7 @@ const LoadRecomendations = () => {
 };
 
 const LoadCatalog = () => {
-  const promise = makeRequest('{}', 'POST', '/catalog');
+  const promise = makeRequest('', 'POST', '/catalog');
   promise.then(res => {
     if (res === undefined) {
       return;
@@ -179,7 +179,7 @@ const LoadCatalog = () => {
 
   }).catch(err => console.log(err));
 
-  const promise_genres = makeRequest('{}', 'POST', '/genres');
+  const promise_genres = makeRequest('', 'POST', '/getgenres');
   promise_genres.then(genres => {
     if (genres === undefined) {
       return;
@@ -199,7 +199,7 @@ const LoadCatalog = () => {
 };
 
 const LoadRecoms = async () => {
-  const promise = makeRequest('{}', 'POST', '/islogin');
+  const promise = makeRequest('', 'POST', '/islogin');
   promise.then(res => {
     if (res === 'true') {
       LoadRecomendations();

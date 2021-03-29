@@ -6,241 +6,241 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="http\static\404.html">
+    <None Update="Http\static\404.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\500.html">
+    <None Update="Http\static\500.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\admin.css">
+    <None Update="Http\static\admin.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\admin.html">
+    <None Update="Http\static\admin.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\btns.js">
+    <None Update="Http\static\btns.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\catalog.js">
+    <None Update="Http\static\catalog.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\dis_auth.js">
+    <None Update="Http\static\dis_auth.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Bitcoin.mp4">
+    <None Update="Http\static\films\Bitcoin.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Bridge.mp4">
+    <None Update="Http\static\films\Bridge.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Buildings.mp4">
+    <None Update="Http\static\films\Buildings.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Car.mp4">
+    <None Update="Http\static\films\Car.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Cherry.mp4">
+    <None Update="Http\static\films\Cherry.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\City.mp4">
+    <None Update="Http\static\films\City.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Coffee.mp4">
+    <None Update="Http\static\films\Coffee.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Computer.mp4">
+    <None Update="Http\static\films\Computer.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\cscs.mp4">
+    <None Update="Http\static\films\cscs.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Design.mp4">
+    <None Update="Http\static\films\Design.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Dubai.mp4">
+    <None Update="Http\static\films\Dubai.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Fire.mp4">
+    <None Update="Http\static\films\Fire.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Futuristic.mp4">
+    <None Update="Http\static\films\Futuristic.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Glitch.mp4">
+    <None Update="Http\static\films\Glitch.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Hud.mp4">
+    <None Update="Http\static\films\Hud.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Jellyfish.mp4">
+    <None Update="Http\static\films\Jellyfish.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Landing.mp4">
+    <None Update="Http\static\films\Landing.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Loading.mp4">
+    <None Update="Http\static\films\Loading.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Music.mp4">
+    <None Update="Http\static\films\Music.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Nebula.mp4">
+    <None Update="Http\static\films\Nebula.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Neon.mp4">
+    <None Update="Http\static\films\Neon.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Network.mp4">
+    <None Update="Http\static\films\Network.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Ocean.mp4">
+    <None Update="Http\static\films\Ocean.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Palm Trees.mp4">
+    <None Update="Http\static\films\Palm Trees.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Seoul.mp4">
+    <None Update="Http\static\films\Seoul.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Sparrow.mp4">
+    <None Update="Http\static\films\Sparrow.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Trees.mp4">
+    <None Update="Http\static\films\Trees.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\Wireframe.mp4">
+    <None Update="Http\static\films\Wireframe.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\films\World.mp4">
+    <None Update="Http\static\films\World.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\header.jpg">
+    <None Update="Http\static\header.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\index.html">
+    <None Update="Http\static\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\loadFilm.js">
+    <None Update="Http\static\loadFilm.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\logo.ico">
+    <None Update="Http\static\logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\logo.png">
+    <None Update="Http\static\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\moderation.css">
+    <None Update="Http\static\moderation.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\moderationFunctions.js">
+    <None Update="Http\static\moderationFunctions.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\moderationPage.html">
+    <None Update="Http\static\moderationPage.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\onload.js">
+    <None Update="Http\static\onload.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\player.css">
+    <None Update="Http\static\player.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\player.html">
+    <None Update="Http\static\player.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\player.js">
+    <None Update="Http\static\player.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Bitcoin.png">
+    <None Update="Http\static\posters\Bitcoin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Bridge.png">
+    <None Update="Http\static\posters\Bridge.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Buildings.png">
+    <None Update="Http\static\posters\Buildings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Car.png">
+    <None Update="Http\static\posters\Car.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Cherry.png">
+    <None Update="Http\static\posters\Cherry.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\City.png">
+    <None Update="Http\static\posters\City.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Coffee.png">
+    <None Update="Http\static\posters\Coffee.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Computer.png">
+    <None Update="Http\static\posters\Computer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\cscs.png">
+    <None Update="Http\static\posters\cscs.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Design.png">
+    <None Update="Http\static\posters\Design.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Dubai.png">
+    <None Update="Http\static\posters\Dubai.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Fire.png">
+    <None Update="Http\static\posters\Fire.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Futuristic.png">
+    <None Update="Http\static\posters\Futuristic.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Glitch.png">
+    <None Update="Http\static\posters\Glitch.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Hud.png">
+    <None Update="Http\static\posters\Hud.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Jellyfish.png">
+    <None Update="Http\static\posters\Jellyfish.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Landing.png">
+    <None Update="Http\static\posters\Landing.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Loading.png">
+    <None Update="Http\static\posters\Loading.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Music.png">
+    <None Update="Http\static\posters\Music.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Nebula.png">
+    <None Update="Http\static\posters\Nebula.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Neon.png">
+    <None Update="Http\static\posters\Neon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Network.png">
+    <None Update="Http\static\posters\Network.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Ocean.png">
+    <None Update="Http\static\posters\Ocean.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Palm Trees.png">
+    <None Update="Http\static\posters\Palm Trees.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Seoul.png">
+    <None Update="Http\static\posters\Seoul.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Sparrow.png">
+    <None Update="Http\static\posters\Sparrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Trees.png">
+    <None Update="Http\static\posters\Trees.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\Wireframe.png">
+    <None Update="Http\static\posters\Wireframe.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\posters\World.png">
+    <None Update="Http\static\posters\World.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\request.js">
+    <None Update="Http\static\request.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="http\static\styles.css">
+    <None Update="Http\static\styles.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
