@@ -27,6 +27,7 @@ namespace Filmhub
             server.AddRoute("/getgenres", router.GetGenres);
             server.AddRoute("/catalog", router.Catalog);
             server.AddRoute("/islogin", router.IsLogin);
+            server.AddRoute("/setfilter", router.Filter);
         }
 
         public void Start()
