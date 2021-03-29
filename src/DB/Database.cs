@@ -116,10 +116,7 @@ namespace Filmhub.DB
                 // Commit changes
                 SaveChanges();
             }
-            catch (Exception exception)
-            {
-                logger.Error(exception.ToString());
-            }
+            catch (Exception) { }
         }
     }
 }
