@@ -11,7 +11,7 @@ using Filmhub.DB;
 
 namespace Filmhub.Http
 {
-    public delegate void Callback(Client client, ILogger logger = null);
+    public delegate void Callback(Client client, ref ILogger logger, ref Database db);
 
     class Server
     {
@@ -136,8 +136,8 @@ namespace Filmhub.Http
             if (routes.ContainsKey(client.Path))
             {
                 callback = routes[client.Path];
-                callback(client, logger);
-                client.StatusMsg = "200 OK";
+                callback(client, ref logger, ref db);
+                client.Response.Close();
             }
             else
             // Responce 500

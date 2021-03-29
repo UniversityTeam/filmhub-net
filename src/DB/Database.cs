@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Filmhub.Logging;
 namespace Filmhub.DB
 {
-    class Database : DbContext
+    public class Database : DbContext
     {
         public DbSet<User> users { get; set; }
         public DbSet<Genre> genres { get; set; }

@@ -22,6 +22,9 @@ namespace Filmhub
 
             server.SetStaticResponce(Code.NOT_FOUND, "404.html");
             server.SetStaticResponce(Code.INTERNAL_ERROR, "500.html");
+
+            Router router = new Router();
+            server.AddRoute("/getgenre", router.GetGenres);
         }
 
         public void Start()

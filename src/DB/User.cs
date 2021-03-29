@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Filmhub.DB
 {
-    class User
+    public class User
     {
         public long id { get; set; }
         public string login { get; set; }
