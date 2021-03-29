@@ -7,6 +7,7 @@ using System.IO;
 
 using Filmhub.FS;
 using Filmhub.Logging;
+using Filmhub.DB;
 
 namespace Filmhub.Http
 {
@@ -20,9 +21,11 @@ namespace Filmhub.Http
         private HttpListener listener;
         private string root;
         private ILogger logger;
+        private Database db;
 
-        public Server(string host, string root, ILogger logger)
+        public Server(string host, string root, ILogger logger, Database db)
         {
+            this.db = db;
             this.logger = logger;
             this.root = root;
             listener = new HttpListener();
@@ -33,7 +36,7 @@ namespace Filmhub.Http
             // Set up http server
             listener.Prefixes.Add(host);
 
-            logger.Info($"Server created {host}");
+            logger.Info($"Server created at {host}");
         }
         ~Server()
         {

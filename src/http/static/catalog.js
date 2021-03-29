@@ -85,7 +85,7 @@ const Filter = event => {
   data.year_from = event.target[1].value;
   data.year_up = event.target[2].value;
   data.sort = event.target[3].value;
-  const promise = makeRequest(JSON.stringify(data), 'POST', '/filter');
+  const promise = makeRequest(JSON.stringify(data), 'POST', '/setfilter');
   promise.then(res => {
     if (res === undefined) {
       return;
