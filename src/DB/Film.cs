@@ -22,10 +22,10 @@ namespace Filmhub.DB
 			int year,
 			double rating,
 			int views,
-			string url,
+			string poster,
 			long genre,
 			bool membership,
-			string poster,
+			string url,
 			int ratingcount)
         {
 			this.id = id;

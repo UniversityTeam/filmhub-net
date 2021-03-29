@@ -25,6 +25,8 @@ namespace Filmhub
 
             Router router = new Router();
             server.AddRoute("/getgenres", router.GetGenres);
+            server.AddRoute("/catalog", router.Catalog);
+            server.AddRoute("/islogin", router.IsLogin);
         }
 
         public void Start()

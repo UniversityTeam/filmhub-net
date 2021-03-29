@@ -13,8 +13,6 @@ const ShowPage = page => {
     return;
   }
 
-  const catalog = document.getElementById('catalog');
-  catalog.innerHTML = '';
   for (const film of filmCatalog[page].data) {
     catalog.appendChild(film);
   }
@@ -41,7 +39,7 @@ const ShowPage = page => {
 };
 
 const FilmHtml = film => `
-            <a class="image-block" href="/player?id=${film.filmid}">
+            <a class="image-block" href="/player?id=${film.id}">
 				<span class="year-block">${film.year}</span>
 				<img src="/posters/${film.poster}" alt="${film.title}">
 			</a>
@@ -111,7 +109,13 @@ const GetTop = () => {
     }
     res = JSON.parse(res);
 
-    Paginate(res);
+      Paginate(res);
+
+      const pages = document.getElementById('pagination');
+      pages.innerHTML = '';
+      const catalog = document.getElementById('catalog');
+      catalog.innerHTML = '';
+
     if (filmCatalog[0] === undefined) {
       return;
     }
@@ -130,7 +134,13 @@ const Search = event => {
     }
     res = JSON.parse(res);
 
-    Paginate(res);
+      Paginate(res);
+
+      const pages = document.getElementById('pagination');
+      pages.innerHTML = '';
+      const catalog = document.getElementById('catalog');
+      catalog.innerHTML = '';
+
     if (filmCatalog[0] === undefined) {
       return;
     }

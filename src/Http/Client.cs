@@ -17,7 +17,12 @@ namespace Filmhub.Http
             Request = context.Request;
             Response = context.Response;
             Ip = Request.UserHostAddress;
-            Path = Request.RawUrl;
+            Path = System.Uri.UnescapeDataString(Request.RawUrl);
+            int offset = Path.IndexOf('?');
+            if (offset > 0)
+            {
+                Path = Path.Substring(0, offset);
+            }
             Method = Request.HttpMethod;
             UserAgent = Request.UserAgent;
             Query = Request.QueryString;
@@ -29,7 +34,9 @@ namespace Filmhub.Http
         public string StatusMsg { get; set; }
         public NameValueCollection Query { get; set; }
         public string Method { get; set; }
-        public int Session { get; set; }
+        public bool Authorized { get; set; }
+        public bool Moderator { get; set; }
+        public bool Administrator { get; set; }
         public string UserAgent { get; set; }
         public HttpListenerRequest Request { get; set; }
         public HttpListenerResponse Response { get; set; }
