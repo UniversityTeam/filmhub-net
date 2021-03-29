@@ -36,7 +36,7 @@ namespace Filmhub.Http
             // Set up http server
             listener.Prefixes.Add(host);
 
-            logger.Info($"Server created {host}");
+            logger.Info($"Server created at {host}");
         }
         ~Server()
         {

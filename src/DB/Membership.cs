@@ -6,13 +6,13 @@ namespace Filmhub.DB
 {
     class Membership
     {
-        public long Id { get; set; }
-        public long Userid { get; set; }
-        public string Expdate { get; set; }
+        public long id { get; set; }
+        public long userid { get; set; }
+        public string expdate { get; set; }
         public Membership(long userid, string expdate)
         {
-            Userid = userid;
-            Expdate = expdate;
+            this.userid = userid;
+            this.expdate = expdate;
         }
     }
 }

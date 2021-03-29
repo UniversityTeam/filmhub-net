@@ -6,12 +6,12 @@ namespace Filmhub.DB
 {
     public class Genre
     {
-        public long Id { get; set; }
-        public string Lable { get; set; }
+        public long id { get; set; }
+        public string lable { get; set; }
         public Genre(long id, string lable)
         {
-            Id = id;
-            Lable = lable;
+            this.id = id;
+            this.lable = lable;
         }
     }
 }

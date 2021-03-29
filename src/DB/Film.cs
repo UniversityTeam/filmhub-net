@@ -6,16 +6,16 @@ namespace Filmhub.DB
 {
 	class Film
 	{
-		public long Id { get; set; }
-		public string Title { get; set; }
-		public int Year { get; set; }
-		public double Rating { get; set; }
-		public int Ratingcount { get; set; }
-		public int Views { get; set; }
-		public string Poster { get; set; }
-		public long Genre { get; set; }
-		public bool Membership { get; set; }
-		public string Url { get; set; }
+		public long id { get; set; }
+		public string title { get; set; }
+		public int year { get; set; }
+		public double rating { get; set; }
+		public int ratingcount { get; set; }
+		public int views { get; set; }
+		public string poster { get; set; }
+		public long genre { get; set; }
+		public bool membership { get; set; }
+		public string url { get; set; }
 		public Film(
 			long id,
 			string title,
@@ -28,16 +28,16 @@ namespace Filmhub.DB
 			string poster,
 			int ratingcount)
         {
-			Id = id;
-			Title = title;
-			Year = year;
-			Rating = rating;
-			Ratingcount = ratingcount;
-			Views = views;
-			Poster = poster;
-			Genre = genre;
-			Membership = membership;
-			Url = url;
+			this.id = id;
+			this.title = title;
+			this.year = year;
+			this.rating = rating;
+			this.ratingcount = ratingcount;
+			this.views = views;
+			this.poster = poster;
+			this.genre = genre;
+			this.membership = membership;
+			this.url = url;
 		}
 	}
 }

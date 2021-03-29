@@ -6,18 +6,18 @@ namespace Filmhub.DB
 {
 	class Comment
 	{
-		public long Id { get; set; }
-		public long Filmid { get; set; }
-		public long Userid { get; set; }
-		public string Data { get; set; }
-		public bool Approved { get; set; }
-		public Comment(long id, long userid, long filmid, string data, bool approved)
+		public long id { get; set; }
+		public string data { get; set; }
+		public bool approved { get; set; }
+		public long film { get; set; }
+		public long user { get; set; }
+		public Comment(long id, long user, long film, string data, bool approved)
         {
-			Id = id;
-			Userid = userid;
-			Filmid = filmid;
-			Data = data;
-			Approved = approved;
-        }
+			this.id = id;
+			this.user = user;
+			this.film = film;
+			this.data = data;
+			this.approved = approved;
+		}
 	}
 }
