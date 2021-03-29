@@ -1,5 +1,9 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Filmhub.Http
 {
@@ -14,6 +18,7 @@ namespace Filmhub.Http
 
         public Client(HttpListenerContext context)
         {
+            Query = new Dictionary<string, string>();
             Request = context.Request;
             Response = context.Response;
             Ip = Request.UserHostAddress;
@@ -25,14 +30,25 @@ namespace Filmhub.Http
             }
             Method = Request.HttpMethod;
             UserAgent = Request.UserAgent;
-            Query = Request.QueryString;
+            if(Request.HasEntityBody)
+            {
+                StreamReader reader = new StreamReader(Request.InputStream);
+                string json = reader.ReadToEnd();
+                Query = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+            }
+
+            foreach (var key in Request.QueryString.AllKeys)
+            {
+                Query.Add(key, Request.QueryString[key]);
+            }
+
             CurrentStatus = Status.Success;
         }
         public string Ip { get; set; }
         public string Path { get; set; }
         public Status CurrentStatus { get; set; }
         public string StatusMsg { get; set; }
-        public NameValueCollection Query { get; set; }
+        public Dictionary<string, string> Query { get; set; }
         public string Method { get; set; }
         public bool Authorized { get; set; }
         public bool Moderator { get; set; }
@@ -40,18 +56,36 @@ namespace Filmhub.Http
         public string UserAgent { get; set; }
         public HttpListenerRequest Request { get; set; }
         public HttpListenerResponse Response { get; set; }
+        public string ExceptionMsg { get; set; }
 
         public override string ToString()
         {
-            if (Query.Count == 0)
+            string query = "{";
+            if(Query.Count != 0)
             {
-                return $"[{Ip}]\t\t{Method}\t\t{Path}\t\t{StatusMsg}";
+                bool first = true;
+                foreach(var key in Query.Keys)
+                {
+                    if(first)
+                    {
+                        first = false;
+                    }
+                    else
+                    {
+                        query += ", ";
+                    }
+                    query += $" {{\"{key}\": \"{Query[key]}\"}} ";
+                }
+            }
+            query += "}";
+
+            if (ExceptionMsg != null)
+            {
+                return $"[{Ip}]\t\t{Method}\t\t{Path}\t\t{StatusMsg}\t\t{query}\n{ExceptionMsg}";
             }
             else
             {
-                string queryStr = Query.ToString();
-                //queryStr = queryStr.Substring(13, queryStr.Length - 13);
-                return $"[{Ip}]\t\t{Method}\t\t{Path}\t\t{StatusMsg}\t\t{queryStr}";
+                return $"[{Ip}]\t\t{Method}\t\t{Path}\t\t{StatusMsg}\t\t{query}";
             }
         }
     }

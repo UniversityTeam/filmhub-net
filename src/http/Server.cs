@@ -83,7 +83,8 @@ namespace Filmhub.Http
                 client.Response.StatusCode = 500;
                 client.Response.Close();
                 client.CurrentStatus = Client.Status.Failed;
-                client.StatusMsg = $"500 Internal error\n{exception}";
+                client.StatusMsg = $"500 Internal error";
+                client.ExceptionMsg = exception.ToString();
             }
 
             switch (client.CurrentStatus)

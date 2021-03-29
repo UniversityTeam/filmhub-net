@@ -13,6 +13,8 @@ const ShowPage = page => {
     return;
   }
 
+    const catalog = document.getElementById('catalog');
+    catalog.innerHTML = '';
   for (const film of filmCatalog[page].data) {
     catalog.appendChild(film);
   }

@@ -65,11 +65,11 @@ namespace Filmhub.DB
             users.Add(new User(8, "moderka", "a9a0f658ae77e98c65dd0720663eab0b6696abf3c1bc4f1a43a6bb7aefa7484c", arr0, true, true, false));
 
             // Add genres
-            genres.Add(new Genre(5, "Природа"));
             genres.Add(new Genre(1, "Урбан"));
             genres.Add(new Genre(2, "КофиЁчек"));
             genres.Add(new Genre(3, "Киберпанк"));
             genres.Add(new Genre(4, "Design hud"));
+            genres.Add(new Genre(5, "Природа"));
 
             // Add some comments
             comments.Add(new Comment(1, 4, 2, "Film so bad don`t rec", false));
