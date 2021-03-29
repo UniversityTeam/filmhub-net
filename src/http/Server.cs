@@ -6,176 +6,168 @@ using System.Net;
 using System.IO;
 
 using Filmhub.FS;
+using Filmhub.Logging;
 
-namespace Filmhub
+namespace Filmhub.Http
 {
-    namespace Http
+    public delegate void Callback(Client client, ILogger logger = null);
+
+    class Server
     {
-        public delegate void Callback(NameValueCollection request, HttpListenerResponse response);
+        private Cache staticCache;
+        private Dictionary<string, Callback> routes;
+        private Dictionary<Code, string> responses;
+        private HttpListener listener;
+        private string root;
+        private ILogger logger;
 
-        class Server
+        public Server(string host, string root, ILogger logger)
         {
-            private Cache staticCache;
-            private Dictionary<string, Callback> routes;
-            private Dictionary<Code, string> responses;
-            private HttpListener listener;
-            private string root;
+            this.logger = logger;
+            this.root = root;
+            listener = new HttpListener();
+            responses = new Dictionary<Code, string>();
+            routes = new Dictionary<string, Callback>();
+            staticCache = new Cache();
 
-            public Server(string host, string root)
+            // Set up http server
+            listener.Prefixes.Add(host);
+
+            logger.Info($"Server created {host}");
+        }
+        ~Server()
+        {
+            logger.Info("Server stopped");
+            listener.Stop();
+        }
+
+        public void AddRoute(string path, Callback callback)
+        {
+            routes.Add(path, callback);
+        }
+        public void SetStaticResponce(Code code, string path)
+        {
+            responses.Add(code, path);
+        }
+
+        // Process the new connection to the server
+        // TODO: multithread
+        private void Handle(Client client)
+        {
+            // Simple malicious filtration
+            if (client.Path.Contains(".."))
             {
-                this.root = root;
-                listener = new HttpListener();
-                responses = new Dictionary<Code, string>();
-                routes = new Dictionary<string, Callback>();
-                staticCache = new Cache();
-
-                // Set up http server
-                listener.Prefixes.Add(host);
-
-                Console.WriteLine($"Server created {host}");
-            }
-            ~Server()
-            {
-                Console.WriteLine("Server stopped");
-                listener.Stop();
-            }
-
-            public void AddRoute(string path, Callback callback)
-            {
-                routes.Add(path, callback);
-            }
-            public void SetStaticResponce(Code code, string path)
-            {
-                responses.Add(code, path);
-            }
-
-            // Process the new connection to the server
-            // TODO: multithread
-            private void Handle(HttpListenerContext context)
-            {
-                HttpListenerRequest request = context.Request;
-                HttpListenerResponse response = context.Response;
-
-                // TODO: store ip & user agent
-                //string userAgent = request.UserAgent;
-                string ip = request.UserHostAddress;
-                string url = request.RawUrl;
-                string method = request.HttpMethod;
-                NameValueCollection query = request.QueryString;
-
-                // Simple malicious filtration
-                if (url.Contains(".."))
-                {
-                    return;
-                }
-
-                string result = "";
-
-                try
-                {
-                    switch (method)
-                    {
-                        case "GET":
-                            HandleStatic(ref url, response, ref result);
-                            break;
-                        case "POST":
-                            HandleRoutes(ref url, request.QueryString, response, ref result);
-                            break;
-                    }
-
-                }
-                // Responce 500
-                catch (Exception exception)
-                {
-                    byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                    response.StatusCode = 500;
-                    response.Close();
-                    result = $"500 Internal error\n{exception}";
-                }
-
-                if (query.Count == 0)
-                {
-                    Console.WriteLine($"[{ip}]\t\t{method}\t\t{url}\t\t{result}");
-                }
-                else
-                {
-                    string queryStr = query.ToString();
-                    //queryStr = queryStr.Substring(13, queryStr.Length - 13);
-                    Console.WriteLine($"[{ip}]\t\t{method}\t\t{url}\t\t{result}\t\t{queryStr}");
-                }
+                return;
             }
 
-            private void HandleStatic(ref string path, HttpListenerResponse response, ref string result)
+            try
             {
-                // Set up default root file
-                if (path == "/")
+                switch (client.Method)
                 {
-                    path = "/index.html";
-                }
-
-                string filePath = root + path;
-
-                // Responce 404 if file doesn't exist
-                if (!System.IO.File.Exists(filePath))
-                {
-                    byte[] buffer404 = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
-                    response.OutputStream.Write(buffer404, 0, buffer404.Length);
-                    response.StatusCode = 404;
-                    response.Close();
-                    result = "404 Not Found";
-                    return;
-                }
-
-                byte[] buffer = staticCache.Get(filePath);
-                response.OutputStream.Write(buffer, 0, buffer.Length);
-                response.StatusCode = 200;
-                response.Close();
-                result = "200 OK";
-            }
-
-            private void HandleRoutes(ref string path, NameValueCollection request, HttpListenerResponse response, ref string result)
-            {
-                Callback callback;
-
-                if (routes.ContainsKey(path))
-                {
-                    callback = routes[path];
-                    callback(request, response);
-                    result = "200 OK";
-                }
-                else
-                // Responce 500
-                {
-                    byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                    response.StatusCode = 500;
-                    response.Close();
-                    result = "500 Internal error";
+                    case "GET":
+                        HandleStatic(client);
+                        break;
+                    case "POST":
+                        HandleRoutes(client);
+                        break;
                 }
             }
-        
-
-            // Start listening for new connections
-            public void Listen()
+            // Responce 500
+            catch (Exception exception)
             {
-                try
-                {
-                    listener.Start();
-                }
-                catch(Exception exception)
-                {
-                    Console.WriteLine(exception);
-                    return;
-                }
+                byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
+                client.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                client.Response.StatusCode = 500;
+                client.Response.Close();
+                client.CurrentStatus = Client.Status.Failed;
+                client.StatusMsg = $"500 Internal error\n{exception}";
+            }
 
-                Console.WriteLine("Server started");
+            switch (client.CurrentStatus)
+            {
+                case Client.Status.Success:
+                    logger.Info(client.ToString());
+                    break;
+                case Client.Status.Warning:
+                    logger.Warning(client.ToString());
+                    break;
+                case Client.Status.Failed:
+                    logger.Error(client.ToString());
+                    break;
+            }
+        }
 
-                while (listener.IsListening)
-                {
-                    // Метод GetContext блокирует текущий поток, ожидая подключения
-                    Handle(listener.GetContext());
-                }
+        private void HandleStatic(Client client)
+        {
+            // Set up default root file
+            if (client.Path == "/")
+            {
+                client.Path = "/index.html";
+            }
+
+            string filePath = root + client.Path;
+
+            // Response 404 if file doesn't exist
+            if (!System.IO.File.Exists(filePath))
+            {
+                byte[] buffer404 = staticCache.Get($"{root}{responses[Code.NOT_FOUND]}");
+                client.Response.OutputStream.Write(buffer404, 0, buffer404.Length);
+                client.Response.StatusCode = 404;
+                client.Response.Close();
+                client.StatusMsg = "404 Not Found";
+                client.CurrentStatus = Client.Status.Warning;
+                return;
+            }
+
+            byte[] buffer = staticCache.Get(filePath);
+            client.Response.OutputStream.Write(buffer, 0, buffer.Length);
+            client.Response.StatusCode = 200;
+            client.Response.Close();
+            client.StatusMsg = "200 OK";
+        }
+
+        private void HandleRoutes(Client client)
+        {
+            Callback callback;
+
+            if (routes.ContainsKey(client.Path))
+            {
+                callback = routes[client.Path];
+                callback(client, logger);
+                client.StatusMsg = "200 OK";
+            }
+            else
+            // Responce 500
+            {
+                byte[] buffer = staticCache.Get($"{root}{responses[Code.INTERNAL_ERROR]}");
+                client.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                client.Response.StatusCode = 500;
+                client.Response.Close();
+                client.StatusMsg = "500 Internal error";
+                client.CurrentStatus = Client.Status.Warning;
+            }
+        }
+
+
+        // Start listening for new connections
+        public void Listen()
+        {
+            try
+            {
+                listener.Start();
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception.ToString());
+                return;
+            }
+
+            logger.Info("Server started");
+
+            while (listener.IsListening)
+            {
+                // Метод GetContext блокирует текущий поток, ожидая подключения
+                Handle(new Client(listener.GetContext()));
             }
         }
     }
