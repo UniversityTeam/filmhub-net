@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Filmhub.DB.Comment" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAAwA=</HashCode>
+      <FileName>DB\Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.DB.Database" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAgAAAAAQACAAACAAAAAAACAAAAAAAAAACCAAAAAAA=</HashCode>
+      <FileName>DB\Database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.DB.Film" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAQAAAAAAAAABAAAACAQEIAAAAABAAAAIAAgA=</HashCode>
+      <FileName>DB\Film.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.DB.Genre" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>DB\Genre.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.DB.Membership" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAgA=</HashCode>
+      <FileName>DB\Membership.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.DB.User" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAGAAAAAQCAAAAAABAAAAAAAAAAEgA=</HashCode>
+      <FileName>DB\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.FS.Cache" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAABAAAAABAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>fs\Cache.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.FS.File" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAoAIAAAAAAAAgAAAAAAAACAAAAACAAAA=</HashCode>
+      <FileName>fs\File.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.FS.IO" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAgAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>fs\io.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Http.Client" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAARUEAIEAAAgAAAAEAEAgAgAAAAAAAAEIAA=</HashCode>
+      <FileName>Http\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Http.Router" Collapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAQAAAAAAAAAAAAAAAABABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Http\Router.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Http.Server" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAMAAAAAQAMACAABgAgBAAIAAAAIAAAAgAAAAAAA=</HashCode>
+      <FileName>Http\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Logging.ILogger" Collapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Logging\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Logging.Logger" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Logging\Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Hub" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Hub.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Filmhub.Program" Collapsed="true">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Main.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Filmhub.Http.Code" Collapsed="true">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgBAAAAAAA=</HashCode>
+      <FileName>Http\Code.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Filmhub.Http.Method" Collapsed="true">
+    <Position X="8" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Http\Method.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Filmhub.Http.Callback" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAIAAgAAAAAAAAAA=</HashCode>
+      <FileName>Http\Server.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
